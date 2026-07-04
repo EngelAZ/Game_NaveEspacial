@@ -7,16 +7,16 @@ namespace NaveEspacial
         public int Width { get; set; }
         public int Height { get; set; }
         public ConsoleColor Color { get; set; }
-        public Point LimiteSuperior { get; set; }
-        public Point LimiteInferior { get; set; }
+        public Point UpperLimit { get; set; }
+        public Point LowerLimit { get; set; }
 
-        public Window(int width, int height, ConsoleColor color, Point limiteSuperior, Point limiteInferior)
+        public Window(int width, int height, ConsoleColor color, Point upperLimit, Point lowerLimit)
         {
             Width = width;
             Height = height;
             Color = color;
-            LimiteSuperior = limiteSuperior;
-            LimiteInferior = limiteInferior;
+            UpperLimit = upperLimit;
+            LowerLimit = lowerLimit;
             Init();
         }
 
@@ -32,29 +32,29 @@ namespace NaveEspacial
         public void DrawBorders()
         {
             Console.ForegroundColor = ConsoleColor.White;
-            for(int i = LimiteSuperior.X; i <= LimiteInferior.X; i++)
+            for(int i = UpperLimit.X; i <= LowerLimit.X; i++)
             {
-                Console.SetCursorPosition(i, LimiteSuperior.Y);
+                Console.SetCursorPosition(i, UpperLimit.Y);
                 Console.Write('=');
-                Console.SetCursorPosition(i, LimiteInferior.Y);
+                Console.SetCursorPosition(i, LowerLimit.Y);
                 Console.Write('=');
             }
 
-            for (int i = LimiteSuperior.Y; i <= LimiteInferior.Y; i++)
+            for (int i = UpperLimit.Y; i <= LowerLimit.Y; i++)
             {
-                Console.SetCursorPosition(LimiteSuperior.X, i);
+                Console.SetCursorPosition(UpperLimit.X, i);
                 Console.Write('║');
-                Console.SetCursorPosition(LimiteInferior.X, i);
+                Console.SetCursorPosition(LowerLimit.X, i);
                 Console.Write('║');
             }
 
-            Console.SetCursorPosition(LimiteSuperior.X, LimiteSuperior.Y);
+            Console.SetCursorPosition(UpperLimit.X, UpperLimit.Y);
             Console.Write('╔');
-            Console.SetCursorPosition(LimiteSuperior.X, LimiteInferior.Y);
+            Console.SetCursorPosition(UpperLimit.X, LowerLimit.Y);
             Console.Write('╚');
-            Console.SetCursorPosition(LimiteInferior.X, LimiteSuperior.Y);
+            Console.SetCursorPosition(LowerLimit.X, UpperLimit.Y);
             Console.Write('╗');
-            Console.SetCursorPosition(LimiteInferior.X, LimiteInferior.Y);
+            Console.SetCursorPosition(LowerLimit.X, LowerLimit.Y);
             Console.Write('╝');
         }
     }
