@@ -12,12 +12,14 @@ namespace NaveEspacial
         public ConsoleColor Color { get; set; }
         public BulletType Type { get; set; }
         public List<Point> PositionsBullet { get; set; }
+        private DateTime _Time;
 
         public Bullet(Point position, ConsoleColor color, BulletType type)
         {
             Position = position;
             Color = color;
             Type = type;
+            _Time = DateTime.Now;
 
             PositionsBullet = new List<Point>();    
         }
@@ -66,23 +68,28 @@ namespace NaveEspacial
 
         public bool Move(int speed, int limit)
         {
-            Erase();
-
-            switch(Type)
+            if(DateTime.Now > _Time.AddMilliseconds(30))
             {
-                case BulletType.Standard:
-                    Position = new Point(Position.X, Position.Y - speed);
-                    if (Position.Y <= limit)
-                        return true;
-                    break;
+                Erase();
 
-                case BulletType.Special:
-                    Position = new Point(Position.X, Position.Y - speed);
-                    if (Position.Y <= limit)
-                        return true;
-                    break;
+                switch(Type)
+                {
+                    case BulletType.Standard:
+                        Position = new Point(Position.X, Position.Y - speed);
+                        if (Position.Y <= limit)
+                            return true;
+                        break;
+
+                    case BulletType.Special:
+                        Position = new Point(Position.X, Position.Y - speed);
+                        if (Position.Y <= limit)
+                            return true;
+                        break;
+                }
+                Draw();
+                _Time = DateTime.Now;
             }
-            Draw();
+
             return false;
         }
     }
