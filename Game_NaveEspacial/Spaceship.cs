@@ -9,6 +9,7 @@ namespace NaveEspacial
         public ConsoleColor Color { get; set; }
         public Window WindowN { get; set; }
         public List<Point> PositionsSpaceship { get; set; }
+        public List<Bullet> Bullets { get; set; }
 
         public Spaceship( Point position, ConsoleColor color, Window window)
         {
@@ -17,6 +18,7 @@ namespace NaveEspacial
             Color = color;
             WindowN = window;
             PositionsSpaceship = new List<Point>();
+            Bullets = new List<Bullet>();
         }
 
         public void Draw()
@@ -71,6 +73,25 @@ namespace NaveEspacial
 
             distance.X *= speed;
             distance.Y *= speed;
+
+            if (key.Key == ConsoleKey.RightArrow)
+            {
+                Bullet bullet = new Bullet(new Point(Position.X + 6, Position.Y + 2), 
+                    ConsoleColor.White, BulletType.Standard);
+                Bullets.Add(bullet);
+            }
+            if (key.Key == ConsoleKey.LeftArrow)
+            {
+                Bullet bullet = new Bullet(new Point(Position.X, Position.Y + 2), 
+                    ConsoleColor.White, BulletType.Standard);
+                Bullets.Add(bullet);
+            }
+            if (key.Key == ConsoleKey.UpArrow)
+            {
+                Bullet bullet = new Bullet(new Point(Position.X + 2, Position.Y - 2), 
+                    ConsoleColor.White, BulletType.Special);
+                Bullets.Add(bullet);
+            }
         }
 
         public void Collisions(Point distance)
@@ -98,6 +119,17 @@ namespace NaveEspacial
                 Keyboard(ref distance, speed);
                 Collisions(distance);
                 Draw();
+            }
+        }
+
+        public void Shoot()
+        {
+            for (int i = 0; i < Bullets.Count; i++)
+            {
+                if (Bullets[i].Move(1, WindowN.UpperLimit.Y))
+                {
+                    Bullets.RemoveAt(i);
+                }
             }
         }
 
