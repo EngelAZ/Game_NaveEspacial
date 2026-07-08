@@ -60,13 +60,13 @@ namespace NaveEspacial
         public void Keyboard(ref Point distance, int speed)
         {
             ConsoleKeyInfo key = Console.ReadKey(true);
-            if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow)
+            if (key.Key == ConsoleKey.W)
                 distance = new Point(0, -1);
-            if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow)
+            if (key.Key == ConsoleKey.S)
                 distance = new Point(0, 1);
-            if (key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow)
+            if (key.Key == ConsoleKey.A)
                 distance = new Point(-1, 0);
-            if (key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow)
+            if (key.Key == ConsoleKey.D)
                 distance = new Point(1, 0);
 
             distance.X *= speed;
