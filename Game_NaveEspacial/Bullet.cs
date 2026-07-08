@@ -36,7 +36,7 @@ namespace NaveEspacial
                     Console.SetCursorPosition(x, y);
                     Console.Write("o");
                     PositionsBullet.Add(new Point(x, y));
-                    break
+                    break;
 
                 case BulletType.Special:
                     Console.SetCursorPosition(x + 1, y);
@@ -51,7 +51,7 @@ namespace NaveEspacial
                     PositionsBullet.Add(new Point(x + 2, y + 1));
                     PositionsBullet.Add(new Point(x + 1, y + 2));
 
-                    break
+                    break;
             }
         }
 
@@ -74,7 +74,7 @@ namespace NaveEspacial
                     Position = new Point(Position.X, Position.Y - speed);
                     if (Position.Y <= limit)
                         return true;
-                    break
+                    break;
 
                 case BulletType.Special:
                     Position = new Point(Position.X, Position.Y - speed);
