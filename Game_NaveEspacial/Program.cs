@@ -18,6 +18,7 @@ void game()
     while(jugar)
     {
         spaceship.Move(3);
+        spaceship.Shoot();
     }
 }
 
