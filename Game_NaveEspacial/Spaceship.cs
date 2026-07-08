@@ -11,6 +11,8 @@ namespace NaveEspacial
         public List<Point> PositionsSpaceship { get; set; }
         public List<Bullet> Bullets { get; set; }
         public float Overload { get; set; }
+        public bool OverloadCondition;
+        public float SpecialBulletCooldown { get; set; }
 
         public Spaceship( Point position, ConsoleColor color, Window window)
         {
@@ -77,21 +79,49 @@ namespace NaveEspacial
 
             if (key.Key == ConsoleKey.RightArrow)
             {
-                Bullet bullet = new Bullet(new Point(Position.X + 6, Position.Y + 2), 
-                    ConsoleColor.White, BulletType.Standard);
-                Bullets.Add(bullet);
+                if(!OverloadCondition)
+                {
+                    Bullet bullet = new Bullet(new Point(Position.X + 6, Position.Y + 2), 
+                        ConsoleColor.White, BulletType.Standard);
+                    Bullets.Add(bullet);
+
+                    Overload += 1.2f;
+
+                    if (Overload >= 100)
+                    {
+                        OverloadCondition = true;
+                        Overload = 100;
+                    }
+                }
+
             }
             if (key.Key == ConsoleKey.LeftArrow)
             {
-                Bullet bullet = new Bullet(new Point(Position.X, Position.Y + 2), 
-                    ConsoleColor.White, BulletType.Standard);
-                Bullets.Add(bullet);
+                if (!OverloadCondition)
+                {
+                    Bullet bullet = new Bullet(new Point(Position.X, Position.Y + 2), 
+                        ConsoleColor.White, BulletType.Standard);
+                    Bullets.Add(bullet);
+
+                    Overload += 1.2f;
+
+                    if (Overload >= 100)
+                    {
+                        OverloadCondition = true;
+                        Overload = 100;
+                    }
+                }
             }
             if (key.Key == ConsoleKey.UpArrow)
             {
-                Bullet bullet = new Bullet(new Point(Position.X + 2, Position.Y - 2), 
-                    ConsoleColor.White, BulletType.Special);
-                Bullets.Add(bullet);
+                if(SpecialBulletCooldown >= 100)
+                {
+                    Bullet bullet = new Bullet(new Point(Position.X + 2, Position.Y - 2), 
+                        ConsoleColor.White, BulletType.Special);
+                    Bullets.Add(bullet);
+                    SpecialBulletCooldown = 0;
+                }
+
             }
         }
 
@@ -115,11 +145,32 @@ namespace NaveEspacial
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(WindowN.UpperLimit.X + 1, WindowN.UpperLimit.Y - 1);
-            Console.Write($"Health: {(int)Healt}%");
+            Console.Write($"Health: {(int)Healt} %  ");
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(WindowN.UpperLimit.X + 15, WindowN.UpperLimit.Y - 1);
-            Console.Write($"Overload: {(int)Overload}%");
+            if (Overload <= 0)
+                Overload = 0;
+            else
+                Overload -= 0.0007f;
+
+            if (Overload <= 50)
+                OverloadCondition = false;
+            if(OverloadCondition)
+                Console.ForegroundColor = ConsoleColor.Red;
+            else if(Overload <= 25)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.SetCursorPosition(WindowN.UpperLimit.X + 16, WindowN.UpperLimit.Y - 1);
+            Console.Write($"Overload: {(int)Overload} %  ");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(WindowN.UpperLimit.X + 32, WindowN.UpperLimit.Y - 1);
+            Console.Write($"Special Bullet: {(int)SpecialBulletCooldown}%  ");
+            if (SpecialBulletCooldown >= 100)
+                SpecialBulletCooldown = 100;
+            else
+                SpecialBulletCooldown += 0.0007f;
         }
 
         public void Move(int speed)
