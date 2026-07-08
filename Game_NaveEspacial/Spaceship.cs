@@ -10,6 +10,7 @@ namespace NaveEspacial
         public Window WindowN { get; set; }
         public List<Point> PositionsSpaceship { get; set; }
         public List<Bullet> Bullets { get; set; }
+        public float Overload { get; set; }
 
         public Spaceship( Point position, ConsoleColor color, Window window)
         {
@@ -110,6 +111,17 @@ namespace NaveEspacial
             Position = positionAssistance;
         }
 
+        public void Information()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(WindowN.UpperLimit.X + 1, WindowN.UpperLimit.Y - 1);
+            Console.Write($"Health: {(int)Healt}%");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(WindowN.UpperLimit.X + 15, WindowN.UpperLimit.Y - 1);
+            Console.Write($"Overload: {(int)Overload}%");
+        }
+
         public void Move(int speed)
         {
             if(Console.KeyAvailable)
@@ -120,6 +132,7 @@ namespace NaveEspacial
                 Collisions(distance);
                 Draw();
             }
+            Information();
         }
 
         public void Shoot()
