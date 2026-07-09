@@ -133,8 +133,8 @@ namespace NaveEspacial
                 positionAssistance.X = WindowN.UpperLimit.X + 1;
             if (positionAssistance.X + 6 >= WindowN.LowerLimit.X)
                 positionAssistance.X = WindowN.LowerLimit.X - 7;
-            if (positionAssistance.Y <= WindowN.UpperLimit.Y)
-                positionAssistance.Y = WindowN.UpperLimit.Y + 1;
+            if (positionAssistance.Y <= (WindowN.UpperLimit.Y) + 20)
+                positionAssistance.Y = (WindowN.UpperLimit.Y + 1) + 20;
             if (positionAssistance.Y + 2 >= WindowN.LowerLimit.Y)
                 positionAssistance.Y = WindowN.LowerLimit.Y - 3;
 
