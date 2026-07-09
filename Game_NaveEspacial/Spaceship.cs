@@ -197,5 +197,22 @@ namespace NaveEspacial
             }
         }
 
+        public void Death()
+        {
+            Console.ForegroundColor = Color;
+            foreach(Point item in PositionsSpaceship)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write("X");
+                Thread.Sleep(200);
+            }
+            foreach(Point item in PositionsSpaceship)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write(" ");
+                Thread.Sleep(200);
+            }
+        }
+
     }
 }
