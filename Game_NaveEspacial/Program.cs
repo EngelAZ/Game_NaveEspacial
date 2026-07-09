@@ -19,6 +19,11 @@ void game()
     {
         spaceship.Move(3);
         spaceship.Shoot();
+        if(spaceship.Healt <= 0)
+        {
+            jugar = false;
+            spaceship.Death();
+        }
     }
 }
 
