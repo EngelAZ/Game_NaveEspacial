@@ -22,11 +22,14 @@ namespace NaveEspacial
         public ConsoleColor Color { get; set; }
         public EnemyType EnemyTypeE { get; set; }
         public List<Point> EnemyPosition { get; set; }
+        public List<Bullet> Bullets { get; set; }
         private Direction _Direction;
         private DateTime _DirectionTime;
+        private Random _Random;
         private float _RandomDirectionTime;
         private DateTime _MovementTime;
-        private Random _Random;
+        private DateTime _FiringTime;
+        private float _RandomFiringTime;
 
         public Enemy(Point position, ConsoleColor color, Window window, EnemyType enemyType)
         {
@@ -41,7 +44,10 @@ namespace NaveEspacial
             _Random = new Random();
             _RandomDirectionTime = 1000;
             _MovementTime = DateTime.Now;
+            _FiringTime = DateTime.Now;
+            _RandomFiringTime = 200;
             EnemyPosition = new List<Point>();
+            Bullets = new List<Bullet>();
         }
 
         public void Draw()
@@ -150,7 +156,8 @@ namespace NaveEspacial
                 Draw();
                 _MovementTime = DateTime.Now;
             }
-
+            CreateBullets();
+            Fire();
         }
 
         public void Collisions(Point positionAssistance)
@@ -257,5 +264,39 @@ namespace NaveEspacial
                 _DirectionTime = DateTime.Now;
             }
         }
+
+        public void CreateBullets()
+        {
+            if(DateTime.Now > _FiringTime.AddMilliseconds(_RandomFiringTime))
+            {
+                if (EnemyTypeE == EnemyType.Standard)
+                {
+                    Bullet bullet = new Bullet(new Point(Position.X + 1, Position.Y + 2),
+                        Color, BulletType.Enemy);
+                    Bullets.Add(bullet);
+                    _RandomFiringTime = _Random.Next(200, 500);
+                }
+
+                if (EnemyTypeE == EnemyType.Boss)
+                {
+                    Bullet bullet = new Bullet(new Point(Position.X + 4, Position.Y + 2),
+                        Color, BulletType.Enemy);
+                    Bullets.Add(bullet);
+                    _RandomFiringTime = _Random.Next(100, 150);
+                }
+                _FiringTime = DateTime.Now;
+            }
+        }
+
+        public void Fire()
+        {
+            for(int i = 0; i < Bullets.Count; i++)
+            {
+                if (Bullets[i].Move(1, WindowN.LowerLimit.Y))
+                    Bullets.RemoveAt(i);
+                
+            }
+        }
+
     }
 }
