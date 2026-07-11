@@ -25,6 +25,8 @@ void game()
 {
     while(jugar)
     {
+        enemy1.Move();
+        enemy2.Move();
         spaceship.Move(3);
         spaceship.Shoot();
         if(spaceship.Healt <= 0)
