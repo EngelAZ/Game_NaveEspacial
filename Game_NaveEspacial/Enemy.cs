@@ -290,11 +290,10 @@ namespace NaveEspacial
 
         public void Fire()
         {
-            for(int i = 0; i < Bullets.Count; i++)
+            for (int i = Bullets.Count - 1; i >= 0; i--)
             {
                 if (Bullets[i].Move(1, WindowN.LowerLimit.Y))
-                    Bullets.RemoveAt(i);
-                
+                    Bullets.RemoveAt(i);   
             }
         }
 
