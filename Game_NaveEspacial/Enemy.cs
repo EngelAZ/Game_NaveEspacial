@@ -26,6 +26,7 @@ namespace NaveEspacial
         private DateTime _DirectionTime;
         private float _RandomDirectionTime;
         private DateTime _MovementTime;
+        private Random _Random;
 
         public Enemy(Point position, ConsoleColor color, Window window, EnemyType enemyType)
         {
@@ -37,6 +38,7 @@ namespace NaveEspacial
             Living = true;
             _Direction = Direction.Right;
             _DirectionTime = DateTime.Now;
+            _Random = new Random();
             _RandomDirectionTime = 1000;
             _MovementTime = DateTime.Now;
             EnemyPosition = new List<Point>();
@@ -211,8 +213,7 @@ namespace NaveEspacial
             if(DateTime.Now > _DirectionTime.AddMilliseconds(_RandomDirectionTime)
                 && (_Direction == Direction.Right || _Direction == Direction.Left))
             {
-                Random random = new Random();
-                int randomNum = random.Next(1, 5);
+                int randomNum = _Random.Next(1, 5);
             
                 switch(randomNum)
                 {
@@ -234,14 +235,13 @@ namespace NaveEspacial
                 }
 
                 _DirectionTime = DateTime.Now;
-                _RandomDirectionTime = random.Next(1000, 2000);
+                _RandomDirectionTime = _Random.Next(1000, 2000);
             }
 
             if (DateTime.Now > _DirectionTime.AddMilliseconds(50)
                 && (_Direction == Direction.Up || _Direction == Direction.Down))
             {
-                Random random = new Random();
-                int randomNum = random.Next(1, 3);
+                int randomNum = _Random.Next(1, 3);
 
                 switch (randomNum)
                 {
