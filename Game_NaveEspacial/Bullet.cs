@@ -4,7 +4,7 @@ namespace NaveEspacial
 {
     public enum BulletType
     {
-        Standard, Special
+        Standard, Special, Enemy,
     }
     internal class Bullet
     {
@@ -52,7 +52,12 @@ namespace NaveEspacial
                     PositionsBullet.Add(new Point(x, y + 1));
                     PositionsBullet.Add(new Point(x + 2, y + 1));
                     PositionsBullet.Add(new Point(x + 1, y + 2));
+                    break;
 
+                case BulletType.Enemy:
+                    Console.SetCursorPosition(x, y);
+                    Console.Write("█");
+                    PositionsBullet.Add(new Point(x, y));
                     break;
             }
         }
@@ -83,6 +88,12 @@ namespace NaveEspacial
                     case BulletType.Special:
                         Position = new Point(Position.X, Position.Y - speed);
                         if (Position.Y <= limit)
+                            return true;
+                        break;
+
+                    case BulletType.Enemy:
+                        Position = new Point(Position.X, Position.Y + speed);
+                        if(Position.Y >= limit)
                             return true;
                         break;
                 }
