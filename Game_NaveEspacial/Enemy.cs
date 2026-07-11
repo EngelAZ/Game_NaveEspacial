@@ -10,6 +10,11 @@ namespace NaveEspacial
 
     internal class Enemy
     {
+        enum Direction
+        {
+            Right, Left, Up, Down,
+        }
+
         public bool Living { get; set; }
         public float Health { get; set; }
         public Point Position { get; set; }
@@ -17,6 +22,10 @@ namespace NaveEspacial
         public ConsoleColor Color { get; set; }
         public EnemyType EnemyTypeE { get; set; }
         public List<Point> EnemyPosition { get; set; }
+        private Direction _Direction;
+        private DateTime _DirectionTime;
+        private float _RandomDirectionTime;
+        private DateTime _MovementTime;
 
         public Enemy(Point position, ConsoleColor color, Window window, EnemyType enemyType)
         {
@@ -26,6 +35,10 @@ namespace NaveEspacial
             EnemyTypeE = enemyType;
             Health = 100;
             Living = true;
+            _Direction = Direction.Right;
+            _DirectionTime = DateTime.Now;
+            _RandomDirectionTime = 1000;
+            _MovementTime = DateTime.Now;
             EnemyPosition = new List<Point>();
         }
 
@@ -115,6 +128,133 @@ namespace NaveEspacial
             {
                 Console.SetCursorPosition(item.X, item.Y);
                 Console.Write(" ");
+            }
+        }
+
+        public void Move()
+        {
+            int time = 30;
+
+            if (EnemyTypeE == EnemyType.Boss)
+                time = 20;
+
+            if(DateTime.Now > _MovementTime.AddMilliseconds(time))
+            {
+                Erase();
+                RandomDirection();
+                Point positionAssistance = Position;
+                Movement(ref positionAssistance);
+                Collisions(positionAssistance);
+                Draw();
+                _MovementTime = DateTime.Now;
+            }
+
+        }
+
+        public void Collisions(Point positionAssistance)
+        {
+            int width = 3;
+            if(EnemyTypeE == EnemyType.Boss)
+                width = 7;
+
+            if (positionAssistance.X <= WindowN.UpperLimit.X)
+            {
+                _Direction = Direction.Right;
+                positionAssistance.X = WindowN.UpperLimit.X + 1;
+            }
+
+            if (positionAssistance.X + width >= WindowN.LowerLimit.X)
+            {
+                _Direction = Direction.Left;
+                positionAssistance.X = WindowN.LowerLimit.X - 1 - width;
+            }
+
+            if (positionAssistance.Y <= WindowN.UpperLimit.Y)
+            {
+                _Direction = Direction.Down;
+                positionAssistance.Y = WindowN.UpperLimit.Y + 1;
+            }
+
+            if (positionAssistance.Y + 2 >= WindowN.UpperLimit.Y + 20)
+            {
+                _Direction = Direction.Up;
+                positionAssistance.Y = WindowN.UpperLimit.Y + 20 - 2;
+            }
+
+            Position = positionAssistance;     
+        }
+
+        public void Movement(ref Point positionAssistance)
+        {
+            switch(_Direction)
+            {
+                case Direction.Right:
+                    positionAssistance.X += 1;
+                    break;
+                
+                case Direction.Left:
+                    positionAssistance.X -= 1;
+                    break;
+
+                case Direction.Up:
+                    positionAssistance.Y -= 1;
+                    break;
+
+                case Direction.Down:
+                    positionAssistance.Y += 1;
+                    break;
+            }
+        }
+
+        public void RandomDirection()
+        {
+            if(DateTime.Now > _DirectionTime.AddMilliseconds(_RandomDirectionTime)
+                && (_Direction == Direction.Right || _Direction == Direction.Left))
+            {
+                Random random = new Random();
+                int randomNum = random.Next(1, 5);
+            
+                switch(randomNum)
+                {
+                    case 1:
+                        _Direction = Direction.Right;
+                        break;
+
+                    case 2:
+                        _Direction = Direction.Left;
+                        break;
+
+                    case 3:
+                        _Direction = Direction.Up;
+                        break;
+
+                    case 4:
+                        _Direction = Direction.Down;
+                        break;
+                }
+
+                _DirectionTime = DateTime.Now;
+                _RandomDirectionTime = random.Next(1000, 2000);
+            }
+
+            if (DateTime.Now > _DirectionTime.AddMilliseconds(50)
+                && (_Direction == Direction.Up || _Direction == Direction.Down))
+            {
+                Random random = new Random();
+                int randomNum = random.Next(1, 3);
+
+                switch (randomNum)
+                {
+                    case 1:
+                        _Direction = Direction.Right;
+                        break;
+
+                    case 2:
+                        _Direction = Direction.Left;
+                        break;
+                }
+
+                _DirectionTime = DateTime.Now;
             }
         }
     }
