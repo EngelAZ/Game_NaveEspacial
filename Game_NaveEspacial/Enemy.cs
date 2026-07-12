@@ -297,5 +297,11 @@ namespace NaveEspacial
             }
         }
 
+        public void Information(int distanceX)
+        {
+            Console.ForegroundColor = Color;
+            Console.SetCursorPosition(WindowN.UpperLimit.X + distanceX, WindowN.UpperLimit.Y - 1);
+            Console.Write($"Enemy: {(int)Health} %  ");
+        }
     }
 }
