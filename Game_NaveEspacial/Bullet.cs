@@ -73,7 +73,7 @@ namespace NaveEspacial
 
         public bool Move(int speed, int limit, List<Enemy>  enemies)
         {
-            if(DateTime.Now > _Time.AddMilliseconds(30))
+            if(DateTime.Now > _Time.AddMilliseconds(20))
             {
                 Erase();
 
@@ -141,7 +141,7 @@ namespace NaveEspacial
 
         public bool Move(int speed, int limit, Spaceship spaceship)
         {
-            if (DateTime.Now > _Time.AddMilliseconds(30))
+            if (DateTime.Now > _Time.AddMilliseconds(20))
             {
                 Erase();
                 Position = new Point(Position.X, Position.Y + speed);

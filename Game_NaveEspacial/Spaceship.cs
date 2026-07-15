@@ -87,7 +87,7 @@ namespace NaveEspacial
                         ConsoleColor.White, BulletType.Standard);
                     Bullets.Add(bullet);
 
-                    Overload += 1.2f;
+                    Overload += 0.8f;
 
                     if (Overload >= 100)
                     {
@@ -105,7 +105,7 @@ namespace NaveEspacial
                         ConsoleColor.White, BulletType.Standard);
                     Bullets.Add(bullet);
 
-                    Overload += 1.2f;
+                    Overload += 0.8f;
 
                     if (Overload >= 100)
                     {
@@ -152,7 +152,7 @@ namespace NaveEspacial
             if (Overload <= 0)
                 Overload = 0;
             else
-                Overload -= 0.0007f;
+                Overload -= 0.009f;
 
             if (Overload <= 50)
                 OverloadCondition = false;
@@ -172,7 +172,7 @@ namespace NaveEspacial
             if (SpecialBulletCooldown >= 100)
                 SpecialBulletCooldown = 100;
             else
-                SpecialBulletCooldown += 0.0007f;
+                SpecialBulletCooldown += 0.009f;
         }
 
         public void Move(int speed)
