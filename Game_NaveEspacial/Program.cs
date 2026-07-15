@@ -4,6 +4,7 @@ using System.Drawing;
 Window window;
 Spaceship spaceship;
 bool jugar = true;
+bool FinalBoss = false;
 Enemy enemy1;
 Enemy enemy2;
 Enemy boss;
@@ -29,10 +30,23 @@ void game()
 {
     while(jugar)
     {
+        if (!enemy1.Living && !enemy2.Living)
+        {
+            FinalBoss = true;
+        }
+        if(FinalBoss)
+        {
+            boss.Move();
+            boss.Information(140);
+        }
+        else 
+        {
         enemy1.Move();
         enemy1.Information(100);
         enemy2.Move();
         enemy2.Information(120);
+        }
+        
         spaceship.Move(3);
         spaceship.Shoot();
         if(spaceship.Healt <= 0)
