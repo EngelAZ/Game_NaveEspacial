@@ -133,6 +133,67 @@ namespace NaveEspacial
             EnemyPosition.Add(new Point(x + 7, y + 2));
         }
 
+        public void Death()
+        {
+            if(EnemyTypeE == EnemyType.Standard)
+            {
+                StandardDeath();
+            }
+            if(EnemyTypeE == EnemyType.Boss)
+            {
+                BossDeath();
+            }
+        }
+
+        public void StandardDeath()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            int x = Position.X;
+            int y = Position.Y;
+
+            Console.SetCursorPosition(x + 1, y);
+            Console.Write("▄▄Zzz");
+            Console.SetCursorPosition(x, y + 1);
+            Console.Write("████");
+            Console.SetCursorPosition(x, y + 2);
+            Console.Write("▀  ▀");
+
+            EnemyPosition.Clear();
+
+            foreach(Bullet item in Bullets)
+            {
+                item.Erase();
+            }
+
+            Bullets.Clear();
+        }
+
+        public void BossDeath()
+        {
+            Console.ForegroundColor = Color;
+            foreach(Point item in EnemyPosition)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write("▓");
+                Thread.Sleep(200);
+            }
+            foreach(Point item in EnemyPosition)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write(" ");
+                Thread.Sleep(200);
+            }
+
+            EnemyPosition.Clear();
+
+            foreach (Bullet item in Bullets)
+            {
+                item.Erase();
+            }
+
+            Bullets.Clear();
+        }
+
         public void Erase()
         {
             foreach(Point item in EnemyPosition)
@@ -144,6 +205,12 @@ namespace NaveEspacial
 
         public void Move()
         {
+            if(!Living)
+            {
+                Death();
+                return; 
+            }
+
             int time = 30;
 
             if (EnemyTypeE == EnemyType.Boss)

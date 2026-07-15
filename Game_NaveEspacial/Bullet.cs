@@ -95,6 +95,7 @@ namespace NaveEspacial
                                     {
                                         enemy.Health = 0;
                                         enemy.Living = false;
+                                        enemy.Death();
                                     }
                                     return true;
                                 }
@@ -121,6 +122,7 @@ namespace NaveEspacial
                                         {
                                             enemy.Health = 0;
                                             enemy.Living = false;
+                                            enemy.Death();
                                         }
                                         return true;
                                     }
