@@ -30,9 +30,10 @@ void game()
 {
     while(jugar)
     {
-        if (!enemy1.Living && !enemy2.Living)
+        if (!enemy1.Living && !enemy2.Living && !FinalBoss)
         {
             FinalBoss = true;
+            window.Danger();
         }
         if(FinalBoss)
         {
@@ -54,6 +55,8 @@ void game()
             jugar = false;
             spaceship.Death();
         }
+        if (!boss.Living)
+            jugar = false;
     }
 }
 

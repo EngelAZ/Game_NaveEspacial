@@ -57,5 +57,21 @@ namespace NaveEspacial
             Console.SetCursorPosition(LowerLimit.X, LowerLimit.Y);
             Console.Write('╝');
         }
+
+        public void Danger()
+        {
+            Console.Clear();
+            DrawBorders();
+            for(int i = 0; i < 6; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Red; 
+                Console.SetCursorPosition(LowerLimit.X / 2 - 2, LowerLimit.Y / 2 );
+                Console.Write("!!Danger!!");
+                Thread.Sleep(200);
+                Console.SetCursorPosition(LowerLimit.X / 2 - 2, LowerLimit.Y / 2);
+                Console.Write("          ");
+                Thread.Sleep(200);
+            }
+        }
     }
 }
