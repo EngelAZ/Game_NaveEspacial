@@ -30,8 +30,9 @@ namespace NaveEspacial
         private DateTime _MovementTime;
         private DateTime _FiringTime;
         private float _RandomFiringTime;
+        private Spaceship SpaceshipC { get; set; }
 
-        public Enemy(Point position, ConsoleColor color, Window window, EnemyType enemyType)
+        public Enemy(Point position, ConsoleColor color, Window window, EnemyType enemyType, Spaceship spaceship)
         {
             Position = position;
             Color = color;
@@ -48,6 +49,8 @@ namespace NaveEspacial
             _RandomFiringTime = 200;
             EnemyPosition = new List<Point>();
             Bullets = new List<Bullet>();
+            SpaceshipC = spaceship;
+
         }
 
         public void Draw()
@@ -292,7 +295,7 @@ namespace NaveEspacial
         {
             for (int i = Bullets.Count - 1; i >= 0; i--)
             {
-                if (Bullets[i].Move(1, WindowN.LowerLimit.Y))
+                if (Bullets[i].Move(1, WindowN.LowerLimit.Y, SpaceshipC))
                     Bullets.RemoveAt(i);   
             }
         }

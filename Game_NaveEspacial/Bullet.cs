@@ -90,12 +90,30 @@ namespace NaveEspacial
                         if (Position.Y <= limit)
                             return true;
                         break;
+                }
+                Draw();
+                _Time = DateTime.Now;
+            }
 
-                    case BulletType.Enemy:
-                        Position = new Point(Position.X, Position.Y + speed);
-                        if(Position.Y >= limit)
-                            return true;
-                        break;
+            return false;
+        }
+
+        public bool Move(int speed, int limit, Spaceship spaceship)
+        {
+            if (DateTime.Now > _Time.AddMilliseconds(30))
+            {
+                Erase();
+                Position = new Point(Position.X, Position.Y + speed);
+                if (Position.Y >= limit)
+                    return true;
+
+                foreach(Point positionS in spaceship.PositionsSpaceship)
+                {
+                    if(positionS.X == Position.X && positionS.Y == Position.Y)
+                    {
+                        spaceship.Healt -= 5;
+                        return true;
+                    }
                 }
                 Draw();
                 _Time = DateTime.Now;
