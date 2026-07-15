@@ -153,6 +153,8 @@ namespace NaveEspacial
                     if(positionS.X == Position.X && positionS.Y == Position.Y)
                     {
                         spaceship.Healt -= 5;
+                        spaceship.ColorAssistance = Color;
+                        spaceship.CollisionTime = DateTime.Now;
                         return true;
                     }
                 }

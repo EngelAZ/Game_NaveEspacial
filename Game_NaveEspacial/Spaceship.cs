@@ -14,6 +14,8 @@ namespace NaveEspacial
         public bool OverloadCondition;
         public float SpecialBulletCooldown { get; set; }
         public List<Enemy> Enemies { get; set; }
+        public ConsoleColor ColorAssistance {  get; set; }
+        public DateTime CollisionTime {  get; set; }
 
         public Spaceship( Point position, ConsoleColor color, Window window)
         {
@@ -24,11 +26,18 @@ namespace NaveEspacial
             PositionsSpaceship = new List<Point>();
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
+            ColorAssistance = color;
+            CollisionTime = DateTime.Now;
         }
 
         public void Draw()
         {
-            Console.ForegroundColor = Color;
+            if (DateTime.Now > CollisionTime.AddMilliseconds(1000))
+                Console.ForegroundColor = Color;
+            else
+                Console.ForegroundColor = ColorAssistance;
+
+ 
             int x = Position.X;
             int y = Position.Y;
 
@@ -183,8 +192,8 @@ namespace NaveEspacial
                 Point distance = new Point();
                 Keyboard(ref distance, speed);
                 Collisions(distance);
-                Draw();
             }
+            Draw();
             Information();
         }
 
