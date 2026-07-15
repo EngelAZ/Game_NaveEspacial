@@ -19,6 +19,10 @@ void init()
     enemy2 = new Enemy(new Point(120, 10), ConsoleColor.Red, window, EnemyType.Standard, spaceship);
     enemy2.Draw();
     boss = new Enemy(new Point(80, 10), ConsoleColor.Magenta, window, EnemyType.Boss, spaceship);
+
+    spaceship.Enemies.Add(enemy1);
+    spaceship.Enemies.Add(enemy2);
+    spaceship.Enemies.Add(boss);
 }
 
 void game()
@@ -41,4 +45,4 @@ void game()
 
 init();
 game();
-Console.ReadKey();
+//Console.ReadKey();

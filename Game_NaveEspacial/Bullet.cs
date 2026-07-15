@@ -71,7 +71,7 @@ namespace NaveEspacial
             }
         }
 
-        public bool Move(int speed, int limit)
+        public bool Move(int speed, int limit, List<Enemy>  enemies)
         {
             if(DateTime.Now > _Time.AddMilliseconds(30))
             {
@@ -83,12 +83,51 @@ namespace NaveEspacial
                         Position = new Point(Position.X, Position.Y - speed);
                         if (Position.Y <= limit)
                             return true;
+
+                        foreach(Enemy enemy in enemies)
+                        {
+                            foreach(Point positionE in enemy.EnemyPosition)
+                            {
+                                if(positionE.X == Position.X && positionE.Y == Position.Y)
+                                {
+                                    enemy.Health -= 7;
+                                    if(enemy.Health <= 0)
+                                    {
+                                        enemy.Health = 0;
+                                        enemy.Living = false;
+                                    }
+                                    return true;
+                                }
+                            }
+                        }
+
                         break;
 
                     case BulletType.Special:
                         Position = new Point(Position.X, Position.Y - speed);
                         if (Position.Y <= limit)
                             return true;
+
+                        foreach(Enemy enemy in enemies)
+                        {
+                            foreach(Point positionE in enemy.EnemyPosition)
+                            {
+                                foreach(Point positionB in PositionsBullet)
+                                {
+                                    if(positionE.X == positionB.X && positionE.Y == positionB.Y)
+                                    {
+                                        enemy.Health -= 40;
+                                        if(enemy.Health <= 0)
+                                        {
+                                            enemy.Health = 0;
+                                            enemy.Living = false;
+                                        }
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+
                         break;
                 }
                 Draw();

@@ -13,6 +13,7 @@ namespace NaveEspacial
         public float Overload { get; set; }
         public bool OverloadCondition;
         public float SpecialBulletCooldown { get; set; }
+        public List<Enemy> Enemies { get; set; }
 
         public Spaceship( Point position, ConsoleColor color, Window window)
         {
@@ -22,6 +23,7 @@ namespace NaveEspacial
             WindowN = window;
             PositionsSpaceship = new List<Point>();
             Bullets = new List<Bullet>();
+            Enemies = new List<Enemy>();
         }
 
         public void Draw()
@@ -190,7 +192,7 @@ namespace NaveEspacial
         {
             for (int i = 0; i < Bullets.Count; i++)
             {
-                if (Bullets[i].Move(1, WindowN.UpperLimit.Y))
+                if (Bullets[i].Move(1, WindowN.UpperLimit.Y, Enemies))
                 {
                     Bullets.RemoveAt(i);
                 }

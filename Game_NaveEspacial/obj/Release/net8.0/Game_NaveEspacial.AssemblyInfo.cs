@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Game_NaveEspacial")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+457efbbdb6f1fc062decfc45349619ad8bee8856")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9fcb795d32076cb3825564a43acc58ebd0c26fe")]
 [assembly: System.Reflection.AssemblyProductAttribute("Game_NaveEspacial")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Game_NaveEspacial")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
